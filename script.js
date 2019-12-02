@@ -1,24 +1,18 @@
-const Pool = require("pg").Pool;
+const { Pool, Client } = require("pg");
 const pool = new Pool({
   user: "user",
   host: "localhost",
   database: "umuzi",
   password: "passUmuzi",
-  port: 9990
+  port: 5432
 });
 
-const helloWorld = () => {
-  pool.query(
-    "SELECT $1::text as message",
-    ["Hello world!"],
-    (error, results) => {
-      if (error) {
-        throw error;
-      }
+pool.connect(function(err) {
+  if (err) console.log(err + "   Ooops iyala kuvuka iserver ndoda");
+  else console.log("Connected!");
+});
 
-      console.log(results.rows);
-    }
-  );
-};
-
-helloWorld();
+pool.query("SELECT * FROM Visiters", (err, res) => {
+  console.log(err, res);
+  pool.end();
+});
