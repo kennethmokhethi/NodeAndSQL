@@ -12,7 +12,10 @@ pool.connect(function(err) {
   else console.log("Connected!");
 });
 
-pool.query("SELECT * FROM Visiters", (err, res) => {
-  console.log(err, res);
-  pool.end();
-});
+pool.query(
+  "INSERT INTO Visiters(Name,Age,Date_of_visit,Time_of_visit,Name_of_the_person_who_assisted_the_visitor,Comments)VALUES('Buhle',24,'23:12:2019','12:07','Sindy','None')",
+  (err, res) => {
+    console.log(err, res);
+    pool.end();
+  }
+);
