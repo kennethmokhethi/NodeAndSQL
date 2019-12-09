@@ -12,13 +12,13 @@ pool.connect(function(err) {
   else console.log("Connected!");
 });
 
-// pool.query(
-//   "INSERT INTO Visiters(Name,Age,Date_of_visit,Time_of_visit,Name_of_the_person_who_assisted_the_visitor,Comments)VALUES('Kenney',23,'23','14','Leon','I learnt a lot about uMuzi,thanks for the opportunity')",
-//   (err, res) => {
-//     console.log(err, res);
-//     pool.end();
-//   }
-// );
+pool.query(
+  "INSERT INTO Visiters(Name,Age,Date_of_visit,Time_of_visit,Name_of_the_person_who_assisted_the_visitor,Comments)VALUES('Kenney',23,'23','14','Leon','I learnt a lot about uMuzi,thanks for the opportunity')",
+  (err, res) => {
+    console.log(err, res);
+    pool.end();
+  }
+);
 
 function list_all_visitor() {
   pool.query("SELECT * from Visiters", (err, res) => {
