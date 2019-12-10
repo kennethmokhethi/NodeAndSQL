@@ -15,14 +15,19 @@ pool.connect(function(err) {
   else console.log("Connected!");
 });
 
+//Common functionality for every function
+const common_functionality = () => {
+  (err, res) => {
+    console.log(err, res);
+    pool.end();
+  };
+};
+
 //Creating a table called visiters
 const create_visiters_table = () => {
   pool.query(
     "CREATE TABLE Visiters(id SERIAL PRIMARY KEY,Name VARCHAR(50) NOT NULL,Age BIGINT NOT NULL,Date_of_visit DATE NOT NULL,Time_of_visit VARCHAR(50) NOT NULL,Name_of_the_person_who_assisted_the_visitor VARCHAR(50) NOT NULL,Comments VARCHAR(100) NOT NULL)",
-    (err, res) => {
-      console.log(err, res);
-      pool.end();
-    }
+    common_functionality()
   );
 };
 
@@ -65,21 +70,18 @@ const list_all_visitors = () => {
   });
 };
 
+//Deleting or removing a visitor from the table
 const delete_a_visitor = Id => {
-  pool.query(`DELETE FROM Visiters WHERE id=${Id}`, (err, res) => {
-    console.log(err, res);
-    pool.end();
-  });
+  pool.query(`DELETE FROM Visiters WHERE id=${Id}`, common_functionality());
+  console.log(`Deleted visiter ${1}`);
 };
 
 const update_a_visitor = (column_name, column_value, visiter_id) => {
   pool.query(
     `UPDATE Visiters SET ${column_name} =${column_value} WHERE id=${visiter_id}`,
-    (err, res) => {
-      console.log(err, res);
-      pool.end();
-    }
+    common_functionality()
   );
+  console.log(`Updated visiter with Id = ${visiter_id}`);
 };
 
 const view_one_visitor = Id => {
@@ -90,12 +92,10 @@ const view_one_visitor = Id => {
 };
 
 const delete_all_visitors = () => {
-  pool.query("DELETE FROM Visiters", (err, res) => {
-    console.log(err, res);
-    pool.end();
-  });
+  pool.query("DELETE FROM Visiters", common_functionality());
 };
 // create_visiters_table();
+// update_a_visitor("Name", "Faith", 2);
 // add_new_visitor(
 //   "Buhle D",
 //   23,
@@ -115,4 +115,4 @@ const delete_all_visitors = () => {
 // list_all_visitors();
 // delete_a_visitor(1);
 // view_one_visitor(2);
-delete_all_visitors();
+// delete_all_visitors();
