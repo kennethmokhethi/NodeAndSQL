@@ -72,8 +72,31 @@ const delete_a_visiter = Id => {
   });
 };
 
+const update_a_visiter = (column_name, column_value, visiter_id) => {
+  pool.query(
+    `UPDATE Visiters SET ${column_name} =${column_value} WHERE id=${visiter_id}`,
+    (err, res) => {
+      console.log(err, res);
+      pool.end();
+    }
+  );
+};
+
+const view_one_visiter = Id => {
+  pool.query(`SELECT * FROM Visiters WHERE id=${Id}`, (err, res) => {
+    console.log(err, res);
+    pool.end();
+  });
+};
 // create_visiters_table();
-// add_new_visiter("Buhle", 19, "12/12/2019", "12:06:02", "Nelly", "Thanks");
+// add_new_visiter(
+//   "Buhle D",
+//   23,
+//   "12/12/2019",
+//   "14:06:02",
+//   "Nelly and Menxi",
+//   "Thanks"
+// );
 // add_new_visiter(
 //   "Kenneth Mckay",
 //   26,
@@ -84,3 +107,4 @@ const delete_a_visiter = Id => {
 // );
 // list_all_visiters();
 // delete_a_visiter(1);
+view_one_visiter(2);
