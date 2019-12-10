@@ -27,7 +27,7 @@ const create_visiters_table = () => {
 };
 
 //Adding a new visiter into the table called visiters
-const add_new_visiter = (
+const add_new_visitor = (
   argName,
   argAge,
   argDate_of_visit,
@@ -58,16 +58,53 @@ const add_new_visiter = (
 };
 
 //Querying all visiters
-const list_all_visiters = () => {
+const list_all_visitors = () => {
   pool.query("SELECT * from Visiters", (err, res) => {
     console.log(err, res);
     pool.end();
   });
 };
 
+const delete_a_visitor = Id => {
+  pool.query(`DELETE FROM Visiters WHERE id=${Id}`, (err, res) => {
+    console.log(err, res);
+    pool.end();
+  });
+};
+
+const update_a_visitor = (column_name, column_value, visiter_id) => {
+  pool.query(
+    `UPDATE Visiters SET ${column_name} =${column_value} WHERE id=${visiter_id}`,
+    (err, res) => {
+      console.log(err, res);
+      pool.end();
+    }
+  );
+};
+
+const view_one_visitor = Id => {
+  pool.query(`SELECT * FROM Visiters WHERE id=${Id}`, (err, res) => {
+    console.log(err, res);
+    pool.end();
+  });
+};
+
+const delete_all_visitors = () => {
+  pool.query("DELETE FROM Visiters", (err, res) => {
+    console.log(err, res);
+    pool.end();
+  });
+};
 // create_visiters_table();
-// add_new_visiter("Buhle", 19, "12/12/2019", "12:06:02", "Nelly", "Thanks");
-// add_new_visiter(
+// add_new_visitor(
+//   "Buhle D",
+//   23,
+//   "12/12/2019",
+//   "14:06:02",
+//   "Nelly and Menxi",
+//   "Thanks"
+// );
+// add_new_visitor(
 //   "Kenneth Mckay",
 //   26,
 //   "07/24/2019",
@@ -75,4 +112,7 @@ const list_all_visiters = () => {
 //   "Sipho Mkhwanazi",
 //   "I enjoyed my visit at Umuzi"
 // );
-list_all_visiters();
+// list_all_visitors();
+// delete_a_visitor(1);
+// view_one_visitor(2);
+delete_all_visitors();
