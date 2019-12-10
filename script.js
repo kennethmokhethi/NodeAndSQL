@@ -1,4 +1,6 @@
-const { Pool, Client } = require("pg");
+//Distructing the pg object
+const { Pool } = require("pg");
+//Instatiating the pool object with credetials that will give access to the database
 const pool = new Pool({
   user: "user",
   host: "localhost",
@@ -7,12 +9,14 @@ const pool = new Pool({
   port: 5432
 });
 
+//Checking for connection
 pool.connect(function(err) {
-  if (err) console.log(err + "   Ooops iyala kuvuka iserver ndoda");
+  if (err) console.log("SOMETHING WENT WRONG: " + err);
   else console.log("Connected!");
 });
 
-function create_table_visiter() {
+//Creating a table called visiters
+const create_visiters_table = () => {
   pool.query(
     "CREATE TABLE Visiters(id SERIAL PRIMARY KEY,Name VARCHAR(50) NOT NULL,Age BIGINT NOT NULL,Date_of_visit DATE NOT NULL,Time_of_visit VARCHAR(50) NOT NULL,Name_of_the_person_who_assisted_the_visitor VARCHAR(50) NOT NULL,Comments VARCHAR(100) NOT NULL)",
     (err, res) => {
@@ -20,16 +24,17 @@ function create_table_visiter() {
       pool.end();
     }
   );
-}
+};
 
-function add_New_visitor(
+//Adding a new visiter into the table called visiters
+const add_new_visiter = (
   argName,
   argAge,
   argDate_of_visit,
   argTime_of_visit,
   argName_of_person_who_assisted_the_visitor,
   argComments
-) {
+) => {
   const text =
     "INSERT INTO Visiters(Name,Age,Date_of_visit,Time_of_visit,Name_of_the_person_who_assisted_the_visitor,Comments) VALUES($1,$2,$3,$4,$5,$6) RETURNING *";
   const values = [
@@ -50,15 +55,24 @@ function add_New_visitor(
   });
 
   pool.end();
-}
+};
 
-function list_all_visitor() {
+//Querying all visiters
+const list_all_visiters = () => {
   pool.query("SELECT * from Visiters", (err, res) => {
     console.log(err, res);
     pool.end();
   });
-}
+};
 
-// create_table_visiter();
-// add_New_visitor("Buhle", 19, "12/12/2019", "12:06:02", "Nelly", "Thanks");
-list_all_visitor();
+// create_visiters_table();
+// add_new_visiter("Buhle", 19, "12/12/2019", "12:06:02", "Nelly", "Thanks");
+// add_new_visiter(
+//   "Kenneth Mckay",
+//   26,
+//   "07/24/2019",
+//   "09:36:45",
+//   "Sipho Mkhwanazi",
+//   "I enjoyed my visit at Umuzi"
+// );
+list_all_visiters();
