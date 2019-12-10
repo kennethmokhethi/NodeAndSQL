@@ -65,6 +65,13 @@ const list_all_visiters = () => {
   });
 };
 
+const delete_a_visiter = Id => {
+  pool.query(`DELETE FROM Visiters WHERE id=${Id}`, (err, res) => {
+    console.log(err, res);
+    pool.end();
+  });
+};
+
 // create_visiters_table();
 // add_new_visiter("Buhle", 19, "12/12/2019", "12:06:02", "Nelly", "Thanks");
 // add_new_visiter(
@@ -75,4 +82,5 @@ const list_all_visiters = () => {
 //   "Sipho Mkhwanazi",
 //   "I enjoyed my visit at Umuzi"
 // );
-list_all_visiters();
+// list_all_visiters();
+// delete_a_visiter(1);
